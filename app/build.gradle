@@ -13,12 +13,32 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // 证书指纹:
+    //         SHA1: B9:71:8A:0C:59:50:95:29:CA:9C:B5:EC:0C:A6:72:F3:35:D7:DA:09
+    //         SHA256: 52:8A:2E:2E:6B:E4:71:9A:57:09:AF:5C:56:3E:98:BC:48:63:11:5A:95:E0:2B:F7:4C:06:57:AB:C9:DC:81:A5
+    signingConfigs {
+        // Please replace 'xxx' with your own signature certificate information
+        config {
+            storeFile file('../sign/huawei.jks')
+            keyAlias 'key0'
+            keyPassword '123456'
+            storePassword '123456'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.config
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
